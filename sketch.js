@@ -7,6 +7,8 @@ var gameOver;
 var PLAY=1;
 var END=0;
 var gameState=PLAY
+var touches=[1]
+
 function preload(){
   roadImg = loadImage("Road.png");
   boyImg = loadAnimation("runner1.png","runner2.png");
@@ -22,10 +24,10 @@ function setup(){
   
   createCanvas(windowWidth,windowHeight);
 // Moving background
-road=createSprite(200,200);
+road=createSprite(windowWidth/2,windowHeight/2,windowWidth,windowHeight);
 road.addImage(roadImg);
 
-gameOver=createSprite(200,200)
+gameOver=createSprite(windowWidth/2,windowHeight/2)
 gameOver.addImage(gameOver_Img)
 //creating boy running
 boy = createSprite(70,330,20,20);
@@ -43,26 +45,29 @@ swordGroup=new Group();
 function draw() {
 
   background(0);
-  boy.x = World.mouseX;
+  boy.x = World.mouseX || touches.length;
   
   edges= createEdgeSprites();
   boy.collide(edges);
   boy.debug=true;
   swordGroup.debug=true;
- boy.setCollider("circle",1,1,0)
+ boy.setCollider("circle",10-5-2-10,5,600)
  cashG.debug=true;
   //code to reset the background
   
   if (cashG.isTouching(boy)){
   treasureCollection=treasureCollection+50;
+    cashG.destroyEach(0)
   }
   
   if (jwelleryG.isTouching(boy)){
   treasureCollection=treasureCollection+100;
+    jwelleryG.destroyEach(0)
   }
   
   if (diamondsG.isTouching(boy)){
   treasureCollection=treasureCollection+150;
+    diamondsG.destroyEach  (diamonds)
   }
   
   if (cashG.isTouching(boy)){
@@ -72,7 +77,7 @@ function draw() {
   drawSprites();
   textSize(20);
   fill(255);
-  text("Treasure: "+ treasureCollection,150,30);
+  text("Treasure: "+ treasureCollection,windowWidth/2,30);
   
 if (gameState===PLAY){
   
@@ -94,9 +99,9 @@ road.velocityY = 4;
   
 }else if(gameState===END){
   
-  textSize(20);
+  textSize(30);
   fill(255);
-  text("click GameOver to restart",100,400);
+  text("click ⬆GameOver⬆ to restart",200,400);
   
      swordGroup.destroyEach();
         diamondsG.destroyEach();
