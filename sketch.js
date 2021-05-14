@@ -101,7 +101,7 @@ road.velocityY = 4;
   
   textSize(30);
   fill(255);
-  text("click ⬆GameOver⬆ to restart",windowWidth,400);
+  text("click ⬆GameOver⬆ to restart",windowWidth/3.5,400);
   
      swordGroup.destroyEach();
         diamondsG.destroyEach();
